@@ -123,7 +123,7 @@ const Dashboard = () => {
         Crypto & Stock Dashboard
       </Heading>
       <SearchBar onSearch={handleSearch} />
-      <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gap={4}>
+      <Box display="grid" gridTemplateColumns={{ base: "repeat(1, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)" }} gap={4}>
         {filteredData.map((item) => (
           <Box key={item.id} onClick={() => setSelectedItem(item)} width="100%">
             <PriceDisplay item={item} />
