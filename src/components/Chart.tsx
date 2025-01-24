@@ -42,6 +42,7 @@ const Chart: React.FC<{ selectedItem: SelectedItem }> = ({ selectedItem }) => {
   const [chartData, setChartData] = useState<ChartData<"line"> | null>(null);
   // -------- track loading state --------
   const [loading, setLoading] = useState<boolean>(false);
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   // -------- fetch data when the selectedItem changes --------
   useEffect(() => {
@@ -84,7 +85,7 @@ const Chart: React.FC<{ selectedItem: SelectedItem }> = ({ selectedItem }) => {
         } else {
           // -------- fetch price trend data for a stock --------
           const response = await fetch(
-            `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${selectedItem.id}&apikey=P2WR9PN4SH9EDIPP`
+            `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${selectedItem.id}&apikey=${apiKey}`
           );
           const data: { "Time Series (Daily)": StockPricePoint } = await response.json();
 

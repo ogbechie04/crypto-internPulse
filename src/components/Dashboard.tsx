@@ -50,6 +50,7 @@ const Dashboard = () => {
   const [filteredData, setFilteredData] = useState<(Crypto | Stock)[]>([]);
   // -------- Item for chart --------
   const [selectedItem, setSelectedItem] = useState<SelectedItem | null>(null);
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,7 +65,7 @@ const Dashboard = () => {
         const stockSymbols = ["AAPL", "GOOGL",];
         const joinedSymbols = stockSymbols.join(",");
         const stockResponse = await fetch(
-          `https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=${joinedSymbols}&apikey=PHR908VB8YJHCRUL`
+          `https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=${joinedSymbols}&apikey=${apiKey}`
         );
         const stockData = await stockResponse.json();
 
