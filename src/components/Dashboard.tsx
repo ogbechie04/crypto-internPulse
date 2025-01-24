@@ -24,12 +24,12 @@ interface Stock {
   timestamp: string;
 }
 
-interface StockQuote {
-  "1. symbol": string;
-  "2. price": string;
-  "3. volume": string;
-  "4. timestamp": string;
-}
+// interface StockQuote {
+//   "1. symbol": string;
+//   "2. price": string;
+//   "3. volume": string;
+//   "4. timestamp": string;
+// }
 
 interface CryptoCoin {
   id: string;
@@ -50,7 +50,7 @@ const Dashboard = () => {
   const [filteredData, setFilteredData] = useState<(Crypto | Stock)[]>([]);
   // -------- Item for chart --------
   const [selectedItem, setSelectedItem] = useState<SelectedItem | null>(null);
-  const apiKey = import.meta.env.VITE_API_KEY;
+  // const apiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,29 +61,29 @@ const Dashboard = () => {
         );
         const cryptoData = await cryptoResponse.json();
 
-        // -------- Fetch stocks using Batch Stock Quotes API --------
-        const stockSymbols = ["AAPL", "GOOGL",];
-        const joinedSymbols = stockSymbols.join(",");
-        const stockResponse = await fetch(
-          `https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=${joinedSymbols}&apikey=${apiKey}`
-        );
-        const stockData = await stockResponse.json();
+        // // -------- Fetch stocks using Batch Stock Quotes API --------
+        // const stockSymbols = ["AAPL", "GOOGL",];
+        // const joinedSymbols = stockSymbols.join(",");
+        // const stockResponse = await fetch(
+        //   `https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=${joinedSymbols}&apikey=${apiKey}`
+        // );
+        // const stockData = await stockResponse.json();
 
-        // -------- error for if no stock data found --------
-        if (!stockData["Stock Quotes"]) {
-          console.error("No stock data found", stockData);
-          return;
-        }
+        // // -------- error for if no stock data found --------
+        // if (!stockData["Stock Quotes"]) {
+        //   console.error("No stock data found", stockData);
+        //   return;
+        // }
 
-        // -------- Map stock data --------
-        const stocks: Stock[] = stockData["Stock Quotes"].map((quote: StockQuote) => ({
-          id: quote["1. symbol"],
-          name: quote["1. symbol"],
-          type: "stock" as const,
-          price: parseFloat(quote["2. price"]),
-          volume: parseInt(quote["3. volume"], 10),
-          timestamp: quote["4. timestamp"],
-        }));
+        // // -------- Map stock data --------
+        // const stocks: Stock[] = stockData["Stock Quotes"].map((quote: StockQuote) => ({
+        //   id: quote["1. symbol"],
+        //   name: quote["1. symbol"],
+        //   type: "stock" as const,
+        //   price: parseFloat(quote["2. price"]),
+        //   volume: parseInt(quote["3. volume"], 10),
+        //   timestamp: quote["4. timestamp"],
+        // }));
 
         // -------- Map crypto data --------
         const crypto: Crypto[] = cryptoData.map((coin: CryptoCoin) => ({
@@ -98,9 +98,9 @@ const Dashboard = () => {
         }));
 
         // -------- Combine crypto and stock data --------
-        const combinedData = [...crypto, ...stocks];
-        setData(combinedData);
-        setFilteredData(combinedData);
+        // const combinedData = [...crypto, ...stocks];
+        setData(crypto);
+        setFilteredData(crypto);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
